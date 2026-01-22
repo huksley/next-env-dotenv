@@ -1,6 +1,6 @@
 {
   "name": "@huksley/next-env-dotenv",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "Simplified next-env implementation using dotenv that loads .env and .env.NODE_ENV files",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
   "scripts": {
     "build": "tsc",
     "test": "jest",
-    "prepublishOnly": "npm run build"
+    "prepublish": "npm run build; npm run test"
   },
   "keywords": [
     "next",
