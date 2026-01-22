@@ -1,0 +1,26 @@
+{
+  "name": "next-env-dotenv",
+  "version": "1.0.0",
+  "description": "Simplified next-env implementation using dotenv and dotenv-expand",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "nextjs",
+    "env",
+    "dotenv",
+    "environment"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^11.0.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}
