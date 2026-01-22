@@ -1,10 +1,13 @@
 # next-env-dotenv
 
-A simplified implementation of Next.js's `next-env` package using `dotenv`. This package loads environment variables from `.env` and `.env.${process.env.NODE_ENV}` files.
+This project is a drop-in replacement for `@next/env`, uses npm overrides mechanism and allows you to run local development next server with configuration variables from different environments, development, staging, production etc. You are not limited to 1 environment, as with classic next environment resolution mechanism.
+
+Next.js versions supported: 14, 15, 16.
 
 ## Features
 
-- Loads `.env` and `.env.${process.env.NODE_ENV}` environment files
+- Supports custom `NEXT_ENV_FILE` to load instead of `.env.${process.env.NODE_ENV}`
+- Loads `.env.${process.env.NODE_ENV}` and `.env` environment files
 - Supports variable expansion using `dotenv-expand`
 - Does not override existing environment variables
 - Compatible with Next.js's `@next/env` API
@@ -24,7 +27,7 @@ Add to package.json:
   ...
   "overrides": {
     "next": {
-      "@next/env": "@huksley/next-env-dotenv@1.0.3"
+      "@next/env": "@huksley/next-env-dotenv@1.0.33"
     }
   }
 }
