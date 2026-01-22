@@ -1,18 +1,33 @@
 # next-env-dotenv
 
-A simplified implementation of Next.js's `next-env` package using `dotenv`. This package loads environment variables from `.env` and `.env.NODE_ENV` files.
+A simplified implementation of Next.js's `next-env` package using `dotenv`. This package loads environment variables from `.env` and `.env.${process.env.NODE_ENV}` files.
 
 ## Features
 
-- Loads `.env` and `.env.NODE_ENV` environment files
+- Loads `.env` and `.env.${process.env.NODE_ENV}` environment files
 - Supports variable expansion using `dotenv-expand`
 - Does not override existing environment variables
-- Compatible with Next.js's `next-env` API
+- Compatible with Next.js's `@next/env` API
 
 ## Installation
 
 ```bash
 npm install next-env-dotenv
+```
+
+## Using it instead of @next/env
+
+Add to package.json: 
+
+```json
+{
+  ...
+  "overrides": {
+    "next": {
+      "@next/env": "@huksley/next-env-dotenv@1.0.0"
+    }
+  }
+}
 ```
 
 ## Usage
