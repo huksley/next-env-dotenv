@@ -18,7 +18,7 @@ let cachedLoadedEnvFiles: LoadedEnvFiles = []
 let previousLoadedEnvFiles: LoadedEnvFiles = []
 
 export function updateInitialEnv(newEnv: Env) {
-  Object.assign(initialEnv || {}, newEnv)
+  initialEnv = Object.assign(initialEnv || {}, newEnv)
 }
 
 export function resetInitialEnv() {
@@ -96,9 +96,7 @@ export function processEnv(
           typeof parsed[key] === 'undefined' &&
           typeof origEnv[key] === 'undefined'
         ) {
-          // We're being imprecise in the type system - assume parsed[key] can be undefined
-          // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
-          parsed[key] = result.parsed?.[key]!
+          parsed[key] = result.parsed![key]
         }
       }
 
@@ -173,12 +171,14 @@ export function loadEnvConfig(
       }
     }
   }
-  ;[combinedEnv, parsedEnv] = processEnv(
+  const [env, parsed] = processEnv(
     cachedLoadedEnvFiles,
     dir,
     log,
     forceReload,
     onReload
   )
+  combinedEnv = env
+  parsedEnv = parsed
   return { combinedEnv, parsedEnv, loadedEnvFiles: cachedLoadedEnvFiles }
 }
