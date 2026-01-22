@@ -24,70 +24,23 @@ Add to package.json:
   ...
   "overrides": {
     "next": {
-      "@next/env": "@huksley/next-env-dotenv@1.0.0"
+      "@next/env": "@huksley/next-env-dotenv@1.0.3"
     }
   }
 }
 ```
 
-## Usage
-
-```typescript
-import { loadEnvConfig } from 'next-env-dotenv'
-
-// Load environment variables from the current directory
-const result = loadEnvConfig(process.cwd())
-
-console.log('Loaded env files:', result.loadedEnvFiles)
-console.log('Combined env:', result.combinedEnv)
-```
-
-## API
-
-### `loadEnvConfig(dir, dev?, log?, forceReload?, onReload?)`
-
-Loads environment variables from `.env` and `.env.NODE_ENV` files in the specified directory.
-
-**Parameters:**
-- `dir` (string): Directory to load .env files from
-- `dev` (boolean, optional): Development mode flag
-- `log` (Log, optional): Logger object with `info` and `error` methods
-- `forceReload` (boolean, optional): Force reload of environment variables
-- `onReload` (function, optional): Callback called when an env file is reloaded
-
-**Returns:**
-- `combinedEnv` (Env): Combined environment variables
-- `parsedEnv` (Env): Parsed environment variables from .env files
-- `loadedEnvFiles` (LoadedEnvFiles): Array of loaded .env files
-
-### `processEnv(loadedEnvFiles, dir?, log?, forceReload?, onReload?)`
-
-Processes loaded environment files and merges them into `process.env`.
-
-### `resetEnv()`
-
-Resets `process.env` to its initial state.
-
-### `updateInitialEnv(newEnv)`
-
-Updates the initial environment with new values.
-
-### `resetInitialEnv()`
-
-Resets the module state (useful for testing).
-
-## Environment File Loading Order
-
-1. `.env.NODE_ENV` (if `NODE_ENV` is set, e.g., `.env.production`, `.env.development`)
-2. `.env`
-
-Variables defined earlier in the list take precedence. Existing environment variables are never overridden.
+Install NextJS again: `npm i next@16`
 
 ## Differences from Next.js's next-env
 
-This is a simplified version that only loads:
+This version loads:
+
+If NEXT_ENV_FILE specified, will load that file instead of NODE_ENV
+
+- `.env.${process.env.NEXT_ENV_FILE}` - if `NEXT_ENV_FILE` is specified
+- `.env.${process.env.NODE_ENV}` - if `NODE_ENV` is set and `NEXT_ENV_FILE` is not specified)
 - `.env`
-- `.env.NODE_ENV` (e.g., `.env.production`, `.env.development`, `.env.test`)
 
 The original Next.js implementation also loads:
 - `.env.local`

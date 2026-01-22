@@ -1,6 +1,6 @@
 {
   "name": "@huksley/next-env-dotenv",
-  "version": "1.0.2",
+  "version": "1.0.32",
   "description": "Simplified next-env implementation using dotenv that loads .env and .env.NODE_ENV files",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

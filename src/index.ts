@@ -36,7 +36,7 @@ type Log = {
 };
 
 function replaceProcessEnv(sourceEnv: Env) {
-  Object.keys(process.env).forEach(key => {
+  Object.keys(process.env).forEach((key) => {
     // Allow mutating internal Next.js env variables after the server has initiated.
     // This is necessary for dynamic things like the IPC server port.
     if (!key.startsWith("__NEXT_PRIVATE")) {
@@ -56,13 +56,16 @@ export function processEnv(
   dir?: string,
   log: Log = console,
   forceReload = false,
-  onReload?: (envFilePath: string) => void
+  onReload?: (envFilePath: string) => void,
 ) {
   if (!initialEnv) {
     initialEnv = Object.assign({}, process.env);
   }
   // only reload env when forceReload is specified
-  if (!forceReload && (process.env.__NEXT_PROCESSED_ENV || loadedEnvFiles.length === 0)) {
+  if (
+    !forceReload &&
+    (process.env.__NEXT_PROCESSED_ENV || loadedEnvFiles.length === 0)
+  ) {
     return [process.env as Env];
   }
   // flag that we processed the environment values already.
@@ -80,14 +83,18 @@ export function processEnv(
       if (
         result.parsed &&
         !previousLoadedEnvFiles.some(
-          item => item.contents === envFile.contents && item.path === envFile.path
+          (item) =>
+            item.contents === envFile.contents && item.path === envFile.path,
         )
       ) {
         onReload?.(envFile.path);
       }
 
       for (const key of Object.keys(result.parsed || {})) {
-        if (typeof parsed[key] === "undefined" && typeof origEnv[key] === "undefined") {
+        if (
+          typeof parsed[key] === "undefined" &&
+          typeof origEnv[key] === "undefined"
+        ) {
           parsed[key] = result.parsed![key];
         }
       }
@@ -95,7 +102,10 @@ export function processEnv(
       // Add the parsed env to the loadedEnvFiles
       envFile.env = result.parsed || {};
     } catch (err) {
-      log.error(`Failed to load env from ${path.join(dir || "", envFile.path)}`, err);
+      log.error(
+        `Failed to load env from ${path.join(dir || "", envFile.path)}`,
+        err,
+      );
     }
   }
   return [Object.assign(process.env, parsed), parsed];
@@ -112,7 +122,7 @@ export function loadEnvConfig(
   dev?: boolean,
   log: Log = console,
   forceReload = false,
-  onReload?: (envFilePath: string) => void
+  onReload?: (envFilePath: string) => void,
 ): {
   combinedEnv: Env;
   parsedEnv: Env | undefined;
@@ -130,8 +140,12 @@ export function loadEnvConfig(
   cachedLoadedEnvFiles = [];
 
   // Simplified: only load .env and .env.NODE_ENV files
+  const nextEnvFile = process.env.NEXT_ENV_FILE;
   const nodeEnv = process.env.NODE_ENV;
-  const dotenvFiles = [nodeEnv && `.env.${nodeEnv}`, ".env"].filter(Boolean) as string[];
+  const dotenvFiles = [
+    nextEnvFile ? nextEnvFile : nodeEnv && `.env.${nodeEnv}`,
+    ".env",
+  ].filter(Boolean) as string[];
 
   for (const envFile of dotenvFiles) {
     // only load .env if the user provided has an env config file
@@ -149,7 +163,7 @@ export function loadEnvConfig(
       cachedLoadedEnvFiles.push({
         path: envFile,
         contents,
-        env: {} // This will be populated in processEnv
+        env: {}, // This will be populated in processEnv
       });
     } catch (err: any) {
       if (err.code !== "ENOENT") {
@@ -157,7 +171,13 @@ export function loadEnvConfig(
       }
     }
   }
-  const [env, parsed] = processEnv(cachedLoadedEnvFiles, dir, log, forceReload, onReload);
+  const [env, parsed] = processEnv(
+    cachedLoadedEnvFiles,
+    dir,
+    log,
+    forceReload,
+    onReload,
+  );
   combinedEnv = env;
   parsedEnv = parsed;
   return { combinedEnv, parsedEnv, loadedEnvFiles: cachedLoadedEnvFiles };

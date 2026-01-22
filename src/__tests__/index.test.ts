@@ -1,7 +1,12 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as os from "os";
-import { loadEnvConfig, resetEnv, updateInitialEnv, resetInitialEnv } from "../index";
+import {
+  loadEnvConfig,
+  resetEnv,
+  updateInitialEnv,
+  resetInitialEnv,
+} from "../index";
 
 describe("next-env-dotenv", () => {
   let testDir: string;
@@ -48,10 +53,13 @@ describe("next-env-dotenv", () => {
     updateInitialEnv({ NODE_ENV: "production" });
 
     // Create .env and .env.production files
-    fs.writeFileSync(path.join(testDir, ".env"), "BASE_VAR=base\nOVERRIDE_VAR=base_value");
+    fs.writeFileSync(
+      path.join(testDir, ".env"),
+      "BASE_VAR=base\nOVERRIDE_VAR=base_value",
+    );
     fs.writeFileSync(
       path.join(testDir, ".env.production"),
-      "PROD_VAR=prod\nOVERRIDE_VAR=prod_value"
+      "PROD_VAR=prod\nOVERRIDE_VAR=prod_value",
     );
 
     // Load env config
