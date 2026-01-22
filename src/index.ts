@@ -75,7 +75,6 @@ export function processEnv(
     try {
       let result: dotenv.DotenvConfigOutput = {};
       result.parsed = dotenv.parse(envFile.contents);
-
       result = dotenvExpand(result);
 
       if (

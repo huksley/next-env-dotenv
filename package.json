@@ -1,6 +1,6 @@
 {
   "name": "@huksley/next-env-dotenv",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Simplified next-env implementation using dotenv that loads .env and .env.NODE_ENV files",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,9 +22,9 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {
-    "dotenv": "^16.3.1",
-    "dotenv-expand": "^10.0.0"
+  "peerDependencies": {
+    "dotenv": "^16.4.5",
+    "dotenv-expand": "^12.0.3"
   },
   "devDependencies": {
     "@types/jest": "^29.5.8",
