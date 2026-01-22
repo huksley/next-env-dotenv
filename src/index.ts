@@ -27,6 +27,7 @@ export function resetInitialEnv() {
   parsedEnv = undefined
   cachedLoadedEnvFiles = []
   previousLoadedEnvFiles = []
+  delete process.env.__NEXT_PROCESSED_ENV
 }
 
 type Log = {
