@@ -38,7 +38,7 @@ This version loads:
 
 If NEXT_ENV_FILE specified, will load that file instead of NODE_ENV
 
-- `.env.${process.env.NEXT_ENV_FILE}` - if `NEXT_ENV_FILE` is specified
+- `${process.env.NEXT_ENV_FILE}` - if `NEXT_ENV_FILE` is specified
 - `.env.${process.env.NODE_ENV}` - if `NODE_ENV` is set and `NEXT_ENV_FILE` is not specified)
 - `.env`
 
